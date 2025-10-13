@@ -1,10 +1,25 @@
-import { test, expect } from "@playwright/test";
-import { LoginPage } from "../pages/LoginPage";
-import config from "../utils/config";
+import { Page } from "@playwright/test";
 
-test("Standard user can log in", async ({ page }) => {
-  const loginPage = new LoginPage(page);
-  await loginPage.goto();
-  await loginPage.login(config.standardUser.username, config.standardUser.password);
-  await expect(page.locator(".title")).toHaveText("Products");
-});
+export class LoginPage {
+  readonly page: Page;
+  readonly usernameInput;
+  readonly passwordInput;
+  readonly loginButton;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.usernameInput = this.page.locator("#user-name");
+    this.passwordInput = this.page.locator("#password");
+    this.loginButton = this.page.locator("#login-button");
+  }
+
+  async goto() {
+    await this.page.goto("https://www.saucedemo.com/");
+  }
+
+  async login(username: string, password: string) {
+    await this.usernameInput.fill(username);
+    await this.passwordInput.fill(password);
+    await this.loginButton.click();
+  }
+}
