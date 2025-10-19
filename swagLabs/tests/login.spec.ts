@@ -6,8 +6,9 @@ test("Standard user can log in", async ({ loggedInPage }) => {
   await expect(loggedInPage.locator(".title")).toHaveText("Products");
 });
 
-test("Standart Uuser Login and verify products page", async ({ loggedInPage  }) =>{
+test.only("Standart Uuser Login and verify products page", async ({ loggedInPage  }) =>{
   const productPage = new ProductPage(loggedInPage);
   await productPage.verifyPage();
+  await productPage.addItemToBag(['Sauce Labs Backpack','Sauce Labs Bike Light']);
 
 })
