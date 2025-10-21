@@ -23,4 +23,18 @@ export class ProductPage {
         }
     }
 
+    async removeItemsFromBag(items: string[]){
+        for ( const item of items){
+            const removeButton = this.page.locator('.inventory_item').filter({hasText : item}).locator('button:has-text("Remove")');
+
+            if (await removeButton.count()){
+                await removeButton.click()
+            }
+        }
+    }
+
+    async checkoutItem(){
+        const cartButton = this.page.locator('.shopping_cart_link');
+        await cartButton.click();
+    }
 }
